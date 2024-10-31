@@ -19,7 +19,7 @@ namespace TFYIT_Task2
                 int i = 0;
                 foreach (string line in result)
                 {
-                    sw.WriteLine($"{i} " + line);
+                    sw.WriteLine($"{analyzer.indexes[i]} " + line);
                     i++;
                 }
             }

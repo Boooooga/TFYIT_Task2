@@ -13,6 +13,7 @@ namespace TFYIT_Task2
         string[] reservedWords = { "if", "then", "else", "end", "or", "and", "not" };
         string[] specialSigns = { ">", "<", "==", "<>", ">=", "<=", "=", "+", "-", "*", "/" };
         List<string> messages = new List<string>();
+        public List<int> indexes = new List<int>();
         private string[] delimiters = { ".", ";", ",", "(", ")" };
 
         Dictionary<string, List<string>> lexemes = new Dictionary<string, List<string>>();
@@ -237,10 +238,14 @@ namespace TFYIT_Task2
                         if (messages.Last() != message.Replace(" ", ""))
                         {
                             messages.Add(message.Replace(" ", ""));
+                            indexes.Add(start + 1);
                         }
                     }
                     else if (message.Replace(" ", "").Length != 0)
+                    {
                         messages.Add(message.Replace(" ", ""));
+                        indexes.Add(start);
+                    }
                 }
 
                 if ((currentState != prevState) && (currentState == States.ID ||
