@@ -16,9 +16,11 @@ namespace TFYIT_Task2
             string outPath = @"C:\Users\123\Documents\Универ\Теория формальных языков и трансляций\lexemesList.txt";
             using (StreamWriter sw = new StreamWriter(outPath))
             {
+                int i = 0;
                 foreach (string line in result)
                 {
-                    sw.WriteLine(line);
+                    sw.WriteLine($"{i} " + line);
+                    i++;
                 }
             }
         }

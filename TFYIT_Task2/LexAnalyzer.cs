@@ -25,12 +25,30 @@ namespace TFYIT_Task2
         // EQ - знак "==", DLM - разделитель
         private States currentState;
 
+        private string GetLexemeType(string input)
+        {
+            if (input == "if") return "IF";
+            else if (input == "then") return "THEN";
+            else if (input == "else") return "ELSE";
+            else if (input == "end") return "END";
+            else if (input == ">" || input == "<" || input == "==" ||
+                input == ">=" || input == "<=" || input == "<>") return "REL";
+            else if (input == "+" || input == "-" || input == "*" || input == "/") return "MATH";
+            else if (input == "and") return "AND";
+            else if (input == "or") return "OR";
+            else if (input == ";" || input == ",") return "DLM";
+            else if (input == "=") return "ASGN";
+            else if (char.IsDigit(input[0])) return "NUM";
+            else if (char.IsLetter(input[0])) return "ID";
+            else return "UNKNOWN";
+        }
         public List<string> Analyze(string path)
         {
             int i = 0;
             int start = 0;
             string text;
             List<string> allLexemes = new List<string>();
+            List<string> orderedLexemesOut = new List<string>();
             // читаем анализируемый текст из файла
             using (StreamReader file = new StreamReader(path))
             {
@@ -252,12 +270,15 @@ namespace TFYIT_Task2
                         lexemes.Add("Зарезервированные слова", new List<string> { item });
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| зарезервированное слово");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
+
                     else
                     {
                         lexemes["Зарезервированные слова"].Add(item);
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| зарезервированное слово");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                 }
                 // если добавляем спецсимвол
@@ -268,12 +289,14 @@ namespace TFYIT_Task2
                         lexemes.Add("Спецсимволы", new List<string> { item });
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| спецсимвол");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                     else
                     {
                         lexemes["Спецсимволы"].Add(item);
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| спецсимвол");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                 }
                 // если добавляем разделитель
@@ -284,12 +307,14 @@ namespace TFYIT_Task2
                         lexemes.Add("Разделители", new List<string> { item });
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| разделитель");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                     else
                     {
                         lexemes["Разделители"].Add(item);
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| разделитель");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                 }
                 // если добавляем константу
@@ -300,12 +325,14 @@ namespace TFYIT_Task2
                         lexemes.Add("Константы", new List<string> { item });
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| константа");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                     else
                     {
                         lexemes["Константы"].Add(item);
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| константа");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                 }
                 else
@@ -315,12 +342,14 @@ namespace TFYIT_Task2
                         lexemes.Add("Идентификаторы", new List<string> { item });
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| идентификатор");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                     else
                     {
                         lexemes["Идентификаторы"].Add(item);
                         allLexemes.Add(item);
                         Console.WriteLine($"{item} \t| идентификатор");
+                        orderedLexemesOut.Add($"{item} " + $"{GetLexemeType(item)}");
                     }
                 }
             }
@@ -339,7 +368,7 @@ namespace TFYIT_Task2
             }
             Console.ResetColor();
 
-            return allLexemes;
+            return orderedLexemesOut;
         }
     }
 }
